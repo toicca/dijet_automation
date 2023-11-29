@@ -10,7 +10,7 @@ nFiles = 1
 
     
 def getOptions():
-    parser = argparse.ArgumentParser(description="Run the Quark vs Gluon response analysis")
+    parser = argparse.ArgumentParser(description="Run a simple dijet analysis on nanoAOD with RDataFrames")
     parser.add_argument("-n", "--nFiles", type=int, default=nFiles, help="Number of files to read")
     parser.add_argument("-f", "--filepath", type=str, default=filepath, help="Filepath to the files")
     return parser.parse_args()
