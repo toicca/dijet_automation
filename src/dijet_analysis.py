@@ -9,14 +9,14 @@ RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
 
 filepath = '/eos/cms/store/group/phys_jetmet/JMENanoRun3/v2p1/QCD_Pt-15to7000_TuneCP5_Flat_13p6TeV_pythia8/JMENanoRun3_v2p1_MC22_122/220915_171347/0000/'
 inputFiles = ['/eos/cms/store/group/phys_jetmet/JMENanoRun3/v2p1/QCD_Pt-15to7000_TuneCP5_Flat_13p6TeV_pythia8/JMENanoRun3_v2p1_MC22_122/220915_171347/0000/tree_100.root']
-
+outputFile = 'output'
 
     
 def getOptions():
     parser = argparse.ArgumentParser(description="Run a simple dijet analysis on nanoAOD with RDataFrames")
-    # parser.add_argument("-n", "--nFiles", type=int, default=nFiles, help="Number of files to read")
     parser.add_argument("-f", "--filepath", type=str, default=filepath, help="Filepath to the files")
     parser.add_argument("-f_in", "--inputFiles", type=str, default=inputFiles, nargs='+', help="Input files separated by a comma")
+    parser.add_argument("-o", "--outputFile", type=str, default=outputFile, help="Output file name")
     return parser.parse_args()
     
     
@@ -102,4 +102,13 @@ if __name__ == "__main__":
     # Print the number of events
     print("Number of events:")
     print(rdf.Count().GetValue())
+    
+    # Plot jet_pt
+    h_jet_pt = rdf.Histo1D(("Jet_pt", "Jet_pt", 100, 0, 1000), "Jet_pt")
+    
+    # Write the histogram to a file
+    print("Writing histogram to file")
+    f = ROOT.TFile.Open(outputFile+".root", "RECREATE")
+    h_jet_pt.Write()
+    f.Close()
 
