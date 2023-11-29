@@ -1,4 +1,4 @@
-executable            = src/dijet_analysis.py
+executable            = run.sh
 output                = /afs/cern.ch/user/n/ntoikka/output/hello.$(ClusterId).$(ProcId).out
 error                 = /afs/cern.ch/user/n/ntoikka/error/hello.$(ClusterId).$(ProcId).err
 log                   = /afs/cern.ch/user/n/ntoikka/log/hello.$(ClusterId).log
