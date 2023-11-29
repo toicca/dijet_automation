@@ -3,16 +3,20 @@ import numpy as np
 import glob
 import sys, argparse
 
+ROOT.EnableImplicitMT(4)
+
 RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
 
 filepath = '/eos/cms/store/group/phys_jetmet/JMENanoRun3/v2p1/QCD_Pt-15to7000_TuneCP5_Flat_13p6TeV_pythia8/JMENanoRun3_v2p1_MC22_122/220915_171347/0000/'
-nFiles = 1
+inputFiles = ['/eos/cms/store/group/phys_jetmet/JMENanoRun3/v2p1/QCD_Pt-15to7000_TuneCP5_Flat_13p6TeV_pythia8/JMENanoRun3_v2p1_MC22_122/220915_171347/0000/tree_100.root']
+
 
     
 def getOptions():
     parser = argparse.ArgumentParser(description="Run a simple dijet analysis on nanoAOD with RDataFrames")
-    parser.add_argument("-n", "--nFiles", type=int, default=nFiles, help="Number of files to read")
+    # parser.add_argument("-n", "--nFiles", type=int, default=nFiles, help="Number of files to read")
     parser.add_argument("-f", "--filepath", type=str, default=filepath, help="Filepath to the files")
+    parser.add_argument("-f_in", "--inputFiles", type=str, default=inputFiles, nargs='+', help="Input files separated by a comma")
     return parser.parse_args()
     
     
@@ -28,7 +32,7 @@ def strTakeN(colName, n):
     
     return result
     
-def readData(filepath, nFiles, prefix=""):
+def readData(filepath, nFiles=1, prefix=""):
     """
     Read nFiles from filepath and return a list
     """
@@ -47,7 +51,7 @@ def readData(filepath, nFiles, prefix=""):
     print(filelist)
     return filelist
 
-def makeRDF(filelist, printCols=False):
+def makeRDF(inputFiles, printCols=False):
     """Create a RDataFrame from a list of files
 
     Args:
@@ -60,7 +64,7 @@ def makeRDF(filelist, printCols=False):
     # Create a TChain from the filelist
     print("Creating TChain")
     chain = ROOT.TChain("Events")
-    for f in filelist:
+    for f in inputFiles:
         chain.Add(f)
         
     # Create a RDataFrame
@@ -80,14 +84,15 @@ def makeRDF(filelist, printCols=False):
 if __name__ == "__main__":
     # Get command line arguments
     args = getOptions()
-    nFiles = args.nFiles
+    # nFiles = args.nFiles
     filepath = args.filepath
+    inputFiles = args.inputFiles# .split(",")
     
     # Columns to analyze and use
     cols = ["Jet_pt"]
     
     # Create RDataFrame
-    rdf = makeRDF(readData(filepath, nFiles))
+    rdf = makeRDF(inputFiles)
     print("Filtering events")
     # Filter jets
     rdf = (rdf.Filter("Jet_pt.size() > 2", "Filter events with at least 3 jets")
