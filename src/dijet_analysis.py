@@ -5,7 +5,7 @@ import sys, argparse
 
 RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
 
-filepath = 'root://eosuser.cern.ch//eos/cms/store/group/phys_jetmet/JMENanoRun3/v2p1/QCD_Pt-15to7000_TuneCP5_Flat_13p6TeV_pythia8/JMENanoRun3_v2p1_MC22_122/220915_171347/0000/'
+filepath = '/eos/cms/store/group/phys_jetmet/JMENanoRun3/v2p1/QCD_Pt-15to7000_TuneCP5_Flat_13p6TeV_pythia8/JMENanoRun3_v2p1_MC22_122/220915_171347/0000/'
 nFiles = 1
 
     
