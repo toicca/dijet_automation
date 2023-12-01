@@ -5,8 +5,7 @@ import sys, argparse
 
 ROOT.EnableImplicitMT(4)
 
-RDataFrame = ROOT.RDF.Experimental.Distributed.Spark.RDataFrame
-
+RDataFrame = ROOT.RDataFrame
 filepath = '/eos/cms/store/group/phys_jetmet/JMENanoRun3/v2p1/QCD_Pt-15to7000_TuneCP5_Flat_13p6TeV_pythia8/JMENanoRun3_v2p1_MC22_122/220915_171347/0000/'
 inputFiles = ['/eos/cms/store/group/phys_jetmet/JMENanoRun3/v2p1/QCD_Pt-15to7000_TuneCP5_Flat_13p6TeV_pythia8/JMENanoRun3_v2p1_MC22_122/220915_171347/0000/tree_100.root']
 outputFile = 'output'
@@ -91,8 +90,13 @@ if __name__ == "__main__":
     # Columns to analyze and use
     cols = ["Jet_pt"]
     
+    chain = ROOT.TChain("Events")
+    for file in inputFiles:
+        chain.Add(file)
+    # chain.Add(inputFiles[0])    
     # Create RDataFrame
-    rdf = makeRDF(inputFiles)
+    rdf = RDataFrame(chain)
+    # df = makeRDF(inputFiles)
     print("Filtering events")
     # Filter jets
     rdf = (rdf.Filter("Jet_pt.size() > 2", "Filter events with at least 3 jets")
