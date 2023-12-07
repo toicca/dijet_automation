@@ -1,3 +1,3 @@
 # dijet_automation
 
-´´´source /cvmfs/sft.cern.ch/lcg/views/LCG_104a/x86_64-centos7-gcc12-opt/setup.sh´´´
+´´´source /cvmfs/sft.cern.ch/lcg/views/LCG_104c/x86_64-el9-gcc13-opt/setup.sh´´´
