@@ -1,6 +1,6 @@
 executable            = run.sh
-output                = /afs/cern.ch/user/n/ntoikka/output/hello.$(ClusterId).$(ProcId).out
-error                 = /afs/cern.ch/user/n/ntoikka/error/hello.$(ClusterId).$(ProcId).err
-log                   = /afs/cern.ch/user/n/ntoikka/log/hello.$(ClusterId).log
-transfer_input_files  = /afs/cern.ch/user/n/ntoikka/dijet_automation/src/dijet_analysis.py
+output                = output/hello.$(ClusterId).$(ProcId).out
+error                 = error/hello.$(ClusterId).$(ProcId).err
+log                   = log/hello.$(ClusterId).log
+transfer_input_files  = src/dijet_analysis.py
 queue
